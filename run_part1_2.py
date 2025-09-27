@@ -19,7 +19,7 @@ from src.filters import (
 # ---- settings ----
 CAM_PATH  = "data/cameraman.png"   # your file
 SAVE_DIR  = "results/part1_2"
-THRESH    = 0.42                  # tweak by eye
+THRESH    = 0.34                  # tweak by eye
 
 def to_gray01(im):
     im = img_as_float(im)
