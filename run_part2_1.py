@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from skimage import io, color
+from skimage import io
 from skimage.util import img_as_float
 
 from src.filters import (
@@ -14,8 +14,9 @@ from src.filters import (
 )
 
 # ---- settings ----
-IN_PATH       = "data/taj.jpg"   # change if your image is elsewhere
-SAVE_DIR      = "results/part2_1"
+IN_PATH       = "data/pyramid.jpg"   # change this for each run
+SAVE_ROOT     = "results/part2_1"
+NAME          = "pyramid"       # <-- give each run a unique name (e.g., "taj", "dog", "custom1")
 SIGMA         = 1.5              # blur scale
 AMOUNT        = 1.0              # detail boost (unsharp strength)
 TEST_BLUR_SIG = 2.0              # for the blur→resharpen demo
@@ -35,7 +36,10 @@ def save_img(path, arr, cmap=None):
         plt.imsave(path, np.clip(arr, 0.0, 1.0))
 
 def main():
-    # Load; keep color if present (unsharp works per-channel too)
+    SAVE_DIR = os.path.join(SAVE_ROOT, NAME)  # make unique subfolder
+    os.makedirs(SAVE_DIR, exist_ok=True)
+
+    # Load; keep color if present
     img = to_float01(io.imread(IN_PATH))
 
     # A) Standard unsharp (two-step)
@@ -49,7 +53,7 @@ def main():
     save_img(f"{SAVE_DIR}/0_original.png", img)
     save_img(f"{SAVE_DIR}/1_blurred.png",  low)
 
-    # High-frequency visualization (zero-centered -> remap to [0,1])
+    # High-frequency visualization
     hf = high
     hf_vis = (hf - hf.min()) / (hf.max() - hf.min() + 1e-8)
     save_img(f"{SAVE_DIR}/2_highfreq_vis.png", hf_vis)
