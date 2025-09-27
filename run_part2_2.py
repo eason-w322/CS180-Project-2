@@ -8,17 +8,17 @@ from pathlib import Path
 from align_image_code import align_images
 
 # ------------------------ Config ------------------------
-IMG1_PATH = "data/nutmeg.jpg"   # high-frequency source
-IMG2_PATH = "data/DerekPicture.jpg"    # low-frequency source
+IMG1_PATH = "data/joker.jpg"   # high-frequency source
+IMG2_PATH = "data/batman.jpg"    # low-frequency source
 
 # Name each run so outputs don’t overwrite
-RUN_NAME  = "nutmeg_Derek"      
+RUN_NAME  = "batman_joker"      
 OUT_ROOT  = "results/part2_2"   # final OUTDIR will be results/part2_2/<RUN_NAME>
 
 # Parameters
-SIGMA_LOW  = 9.0    # Gaussian sigma for low-pass (im2)
-SIGMA_HIGH = 4.0   # Gaussian sigma inside high-pass (im1’s blur)
-ALPHA_HIGH = 1.5    # scale for high-pass before combining
+SIGMA_LOW  = 1    # Gaussian sigma for low-pass (im2)
+SIGMA_HIGH = 2   # Gaussian sigma inside high-pass (im1’s blur)
+ALPHA_HIGH = 1.0    # scale for high-pass before combining
 BETA_LOW   = 1.0    # scale for low-pass before combining
 # --------------------------------------------------------
 
@@ -125,8 +125,8 @@ def main():
     save_img(f"{OUTDIR}/{run_name}_orig_low.png", to_gray01(im2_aligned))
 
     # Center crop
-    im1_aligned = center_crop(im1_aligned, ratio=0.5)
-    im2_aligned = center_crop(im2_aligned, ratio=0.5)
+    im1_aligned = center_crop(im1_aligned, ratio=0.83)
+    im2_aligned = center_crop(im2_aligned, ratio=0.83)
 
     im1g = to_gray01(im1_aligned)
     im2g = to_gray01(im2_aligned)
